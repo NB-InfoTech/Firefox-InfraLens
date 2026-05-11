@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>InfraLens Settings</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0f172a;
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.page {
+  margin: 0 auto;
+  max-width: 1040px;
+  padding: 28px 20px 44px;
+}
+
+header {
+  align-items: center;
+  border-bottom: 1px solid #1e293b;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+}
+
+header img {
+  height: 32px;
+  width: 32px;
+}
+
+h1 {
+  color: #38bdf8;
+  font-size: 28px;
+  margin: 0;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin: 4px 0 0;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+a {
+  color: #38bdf8;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 13px;
+  min-height: 34px;
+  padding: 8px 12px;
+}
+
+button:hover {
+  background: #334155;
+}
+
+.toggle-list {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 12px;
+}
+
+.toggle {
+  align-items: center;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  color: #cbd5e1;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.toggle input {
+  height: 18px;
+  width: 18px;
+}
+
+.card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+h2 {
+  color: #cbd5e1;
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+p {
+  color: #cbd5e1;
+  margin: 0 0 10px;
+}
+
+.why {
+  color: #93c5fd;
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+.section {
+  margin-top: 24px;
+}
+
+ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+li {
+  color: #cbd5e1;
+  margin: 5px 0;
+}
+
+.badge {
+  background: #172554;
+  border: 1px solid #1d4ed8;
+  border-radius: 999px;
+  color: #bfdbfe;
+  display: inline-block;
+  font-size: 12px;
+  margin-bottom: 10px;
+  padding: 3px 8px;
+}
+
+.footer {
+  border-top: 1px solid #1e293b;
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+  <header>
+    <img src="icon48.png" alt="">
+    <div>
+      <h1>InfraLens Settings</h1>
+      <p class="subtitle">Security and infrastructure checks used by the extension.</p>
+    </div>
+  </header>
+
+  <section class="section card">
+    <h2>Popup Feature Controls</h2>
+    <p>Select which InfraLens sections and buttons should appear in the popup. Changes are saved automatically.</p>
+    <div class="settings-actions">
+      <button id="enableAll">Enable all</button>
+      <button id="disableAll">Disable all</button>
+    </div>
+    <div id="featureToggles" class="toggle-list"></div>
+  </section>
+
+  <section class="section card">
+    <span class="badge">Creator</span>
+    <h2>NB InfoTech</h2>
+    <p>InfraLens is created by NB InfoTech, a CyberSecurity-focused YouTube channel sharing practical security, infrastructure, and awareness content.</p>
+    <p>Visit <a href="https://www.youtube.com/@nbinfotech" target="_blank" rel="noopener noreferrer">NB InfoTech on YouTube</a> for more CyberSecurity learning.</p>
+    <p class="why">If InfraLens helps your security checks, please share a review and rating on the extension listing.</p>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <span class="badge">Transport</span>
+      <h2>HTTPS</h2>
+      <p>HTTPS encrypts traffic between the browser and the website, protecting credentials, cookies, and page data from network interception.</p>
+      <p class="why">InfraLens includes it because insecure HTTP is one of the clearest signals of transport risk.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Header</span>
+      <h2>HSTS</h2>
+      <p>Strict-Transport-Security tells browsers to use HTTPS for future visits and helps prevent downgrade attacks.</p>
+      <p class="why">InfraLens checks it because a site can use HTTPS but still be easier to downgrade if HSTS is missing.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Header</span>
+      <h2>CSP</h2>
+      <p>Content-Security-Policy controls which scripts, styles, images, frames, and connections the page is allowed to load.</p>
+      <p class="why">InfraLens checks it because CSP can reduce the impact of cross-site scripting and unsafe third-party content.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Header</span>
+      <h2>X-Frame-Options</h2>
+      <p>X-Frame-Options helps stop a page from being embedded inside another site without permission.</p>
+      <p class="why">InfraLens checks it because missing frame protection can expose users to clickjacking attacks.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Header</span>
+      <h2>X-Content-Type-Options</h2>
+      <p>X-Content-Type-Options with nosniff prevents browsers from guessing a file type when the server declared a different one.</p>
+      <p class="why">InfraLens checks it because MIME sniffing can turn harmless-looking files into executable content.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Header</span>
+      <h2>Referrer-Policy</h2>
+      <p>Referrer-Policy controls how much URL information is sent to other sites when users click links or load resources.</p>
+      <p class="why">InfraLens checks it because full referrers can leak internal paths, tokens, or sensitive page context.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Header</span>
+      <h2>Permissions-Policy</h2>
+      <p>Permissions-Policy limits browser features such as camera, microphone, geolocation, and payment access.</p>
+      <p class="why">InfraLens checks it because least-privilege browser capabilities reduce accidental exposure.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Cookies</span>
+      <h2>Cookie Flags</h2>
+      <p>Secure, HttpOnly, and SameSite help protect cookies from network theft, script access, and cross-site request abuse.</p>
+      <p class="why">InfraLens includes them because session cookies are often the most valuable browser-side asset.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Network</span>
+      <h2>Mixed Content</h2>
+      <p>Mixed content happens when an HTTPS page loads resources over HTTP.</p>
+      <p class="why">InfraLens checks it because HTTP subresources can weaken an otherwise encrypted page.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Network</span>
+      <h2>Redirect Chain</h2>
+      <p>Redirect chains show the path a browser follows before reaching the final page.</p>
+      <p class="why">InfraLens includes them because insecure or excessive redirects can hide risk and slow troubleshooting.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Reputation</span>
+      <h2>Sucuri SiteCheck</h2>
+      <p>Sucuri SiteCheck reviews a URL for malware, blocklist status, injected spam, and common website compromise indicators.</p>
+      <p class="why">InfraLens links to it because reputation checks complement local browser security checks.</p>
+    </article>
+
+    <article class="card">
+      <span class="badge">Reputation</span>
+      <h2>VirusTotal</h2>
+      <p>VirusTotal aggregates reputation and detection signals from multiple security vendors.</p>
+      <p class="why">InfraLens links to it because external reputation context is useful during suspicious-site triage.</p>
+    </article>
+  </section>
+
+  <section class="section card">
+    <h2>Privacy</h2>
+    <ul>
+      <li>InfraLens is read-only.</li>
+      <li>It does not inject scripts into pages.</li>
+      <li>It does not track browsing history or sell data.</li>
+      <li>External check buttons open third-party tools in a new tab only when clicked.</li>
+    </ul>
+  </section>
+
+  <div class="footer">Copyright @NB InfoTech 2026</div>
+</main>
+<script src="feature-settings.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>

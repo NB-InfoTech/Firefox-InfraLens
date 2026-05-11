@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>InfraLens</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 380px;
+  margin: 0;
+  background: #0f172a;
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+main {
+  padding: 12px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.brand {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.brand img {
+  height: 16px;
+  width: 16px;
+}
+
+h1 {
+  color: #38bdf8;
+  font-size: 17px;
+  margin: 0;
+}
+
+.version {
+  border: 1px solid #1e293b;
+  border-radius: 999px;
+  color: #94a3b8;
+  font-size: 10px;
+  line-height: 1;
+  padding: 3px 6px;
+  white-space: nowrap;
+}
+
+.header-actions {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.icon-button {
+  align-items: center;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0;
+  width: 38px;
+}
+
+.icon-button svg {
+  height: 17px;
+  width: 17px;
+}
+
+.score {
+  align-items: center;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.score strong {
+  font-size: 18px;
+}
+
+.section {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  padding: 10px;
+}
+
+.section-title {
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  line-height: 1.45;
+  margin: 4px 0;
+}
+
+.row span:first-child {
+  color: #94a3b8;
+}
+
+.value {
+  max-width: 230px;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.ok {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.warn {
+  color: #facc15;
+  font-weight: bold;
+}
+
+.bad {
+  color: #fb7185;
+  font-weight: bold;
+}
+
+.muted {
+  color: #94a3b8;
+}
+
+.mono {
+  font-family: Consolas, monospace;
+  white-space: pre-wrap;
+}
+
+.actions {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: 1fr 1fr;
+}
+
+button {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 12px;
+  min-height: 32px;
+  padding: 7px 8px;
+}
+
+button:hover {
+  background: #334155;
+}
+
+.full-width {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.footer {
+  color: #64748b;
+  font-size: 11px;
+  padding: 0 12px 12px;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+<main>
+  <header>
+    <div class="brand">
+      <img src="icon16.png" alt="">
+      <h1>InfraLens</h1>
+      <span id="version" class="version">v--</span>
+    </div>
+    <div class="header-actions">
+      <button id="openSettings" class="icon-button" title="Open settings and security glossary" aria-label="Open settings and security glossary">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M19.4 15a1.8 1.8 0 0 0 .36 1.98l.04.04a2.1 2.1 0 0 1-2.97 2.97l-.04-.04a1.8 1.8 0 0 0-1.98-.36 1.8 1.8 0 0 0-1.09 1.65V21.3a2.1 2.1 0 0 1-4.2 0v-.06a1.8 1.8 0 0 0-1.08-1.65 1.8 1.8 0 0 0-1.99.36l-.04.04a2.1 2.1 0 0 1-2.97-2.97l.04-.04A1.8 1.8 0 0 0 3.84 15a1.8 1.8 0 0 0-1.65-1.09H2.1a2.1 2.1 0 0 1 0-4.2h.09a1.8 1.8 0 0 0 1.65-1.08 1.8 1.8 0 0 0-.36-1.99l-.04-.04a2.1 2.1 0 0 1 2.97-2.97l.04.04a1.8 1.8 0 0 0 1.99.36 1.8 1.8 0 0 0 1.08-1.65V2.1a2.1 2.1 0 0 1 4.2 0v.28a1.8 1.8 0 0 0 1.09 1.65 1.8 1.8 0 0 0 1.98-.36l.04-.04A2.1 2.1 0 0 1 19.8 6.6l-.04.04a1.8 1.8 0 0 0-.36 1.99 1.8 1.8 0 0 0 1.65 1.08h.85a2.1 2.1 0 0 1 0 4.2h-.85A1.8 1.8 0 0 0 19.4 15Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="score" data-feature="securityScore">
+        <span class="muted">Score</span>
+        <strong id="score">--</strong>
+      </div>
+    </div>
+  </header>
+
+  <div class="section" data-feature="siteInfo">
+    <div class="section-title">Site</div>
+    <div class="row"><span>Host</span><span id="site" class="value">Loading...</span></div>
+    <div class="row"><span>Protocol</span><span id="protocol" class="value">Checking...</span></div>
+    <div class="row"><span>Load time</span><span id="loadTime" class="value">Checking...</span></div>
+  </div>
+
+  <div class="section" data-feature="infrastructureProfile">
+    <div class="section-title">Site Details</div>
+    <div class="row"><span>IP Address</span><span id="ipAddress" class="value">Checking...</span></div>
+    <div class="row"><span>CDN</span><span id="cdnProvider" class="value">Checking...</span></div>
+    <div class="row"><span>Language</span><span id="languageInfo" class="value">Checking...</span></div>
+    <div class="row"><span>TLS Certificate</span><span id="tlsCertificate" class="value">Checking...</span></div>
+    <div class="row"><span>CMS</span><span id="cmsProvider" class="value">Checking...</span></div>
+    <div class="row"><span>Version</span><span id="appVersion" class="value">Checking...</span></div>
+    <div class="row"><span>Theme</span><span id="appTheme" class="value">Checking...</span></div>
+    <div class="row"><span>Directory</span><span id="appDirectory" class="value">Checking...</span></div>
+    <div class="row"><span>Ads/analytics</span><span id="analyticsInfo" class="value">Checking...</span></div>
+  </div>
+
+  <div class="section" data-feature="securityHeaders">
+    <div class="section-title">Security Headers</div>
+    <div class="row"><span>HSTS</span><span id="hsts" class="value">Checking...</span></div>
+    <div class="row"><span>CSP</span><span id="csp" class="value">Checking...</span></div>
+    <div class="row"><span>X-Frame-Options</span><span id="xfo" class="value">Checking...</span></div>
+    <div class="row"><span>X-Content-Type-Options</span><span id="xcto" class="value">Checking...</span></div>
+    <div class="row"><span>Referrer-Policy</span><span id="referrerPolicy" class="value">Checking...</span></div>
+    <div class="row"><span>Permissions-Policy</span><span id="permissionsPolicy" class="value">Checking...</span></div>
+  </div>
+
+  <div class="section" data-feature="cookies">
+    <div class="section-title">Cookies</div>
+    <div id="cookies" class="mono">Checking...</div>
+  </div>
+
+  <div class="section" data-feature="mixedContent">
+    <div class="section-title">Mixed Content</div>
+    <div id="mixedContent">Checking...</div>
+  </div>
+
+  <div class="section" data-feature="redirectChain">
+    <div class="section-title">Redirect Chain</div>
+    <div id="redirects" class="mono">Checking...</div>
+  </div>
+
+  <div class="section" data-feature="blocklistCheck">
+    <div class="section-title">Blocklist Check</div>
+    <div class="row"><span>Sucuri</span><span id="sucuriStatus" class="value">Ready</span></div>
+    <div class="actions">
+      <button id="openSecurityHeaders" data-feature="securityHeadersTool">SecurityHeaders</button>
+      <button id="openSslLabs" data-feature="sslLabsTool">SSL Labs</button>
+      <button id="openVirusTotal" data-feature="virusTotalTool">VirusTotal</button>
+      <button id="openSucuri" data-feature="sucuriTool">Sucuri SiteCheck</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Quick Tools</div>
+    <div class="actions">
+      <button id="copyCurl" data-feature="copyCurl">Copy curl</button>
+      <button id="reloadTab" data-feature="reloadTab">Reload tab</button>
+      <button id="hardReloadTab" data-feature="hardReloadTab">Hard reload</button>
+      <button id="exportTxt" data-feature="exportTxt">Export TXT</button>
+      <button id="exportJson" data-feature="exportJson">Export JSON</button>
+    </div>
+  </div>
+</main>
+
+<div class="footer">Read-only. No tracking. No page injection.<br>Copyright @NB InfoTech 2026</div>
+
+<script src="feature-settings.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
