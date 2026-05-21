@@ -83,6 +83,10 @@ function mergeScanData(cachedData, activeData) {
       ...(activeData.headers || {})
     },
     responseTimeMs: activeData.responseTimeMs || cachedData.responseTimeMs || null,
+    redirects:
+      activeData.redirects && activeData.redirects.length
+        ? activeData.redirects
+        : cachedData.redirects || [],
     infrastructure: activeData.infrastructure || cachedData.infrastructure || null,
     activeScan: {
       statusCode: activeData.statusCode || null,

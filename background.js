@@ -54,6 +54,7 @@ function defaultEntry() {
     requestStartedAt: null,
     responseTimeMs: null,
     mainFrameUrl: null,
+    mainRequestId: null,
     infrastructure: defaultInfrastructure()
   };
 }
@@ -373,12 +374,7 @@ function isIpAddress(value) {
 
 async function scanUrl(url) {
   const startedAt = Date.now();
-  const response = await fetch(url, {
-    cache: "no-store",
-    credentials: "omit",
-    method: "GET",
-    redirect: "follow"
-  });
+  const { response, redirects } = await fetchWithRedirects(url);
   const responseTimeMs = Date.now() - startedAt;
 
   return {
@@ -386,8 +382,60 @@ async function scanUrl(url) {
     infrastructure: await inspectInfrastructure(url, response.clone()),
     statusCode: response.status,
     finalUrl: response.url,
+    redirects,
     responseTimeMs
   };
+}
+
+function isRedirectStatus(statusCode) {
+  return statusCode >= 300 && statusCode < 400;
+}
+
+function resolveRedirectUrl(fromUrl, location) {
+  try {
+    return new URL(location, fromUrl).href;
+  } catch (error) {
+    return "";
+  }
+}
+
+async function fetchWithRedirects(url) {
+  const redirects = [];
+  let currentUrl = url;
+  let response = null;
+
+  for (let i = 0; i < 10; i++) {
+    response = await fetch(currentUrl, {
+      cache: "no-store",
+      credentials: "omit",
+      method: "GET",
+      redirect: "manual"
+    });
+
+    const location = response.headers.get("location");
+    if (!isRedirectStatus(response.status) || !location) break;
+
+    const nextUrl = resolveRedirectUrl(currentUrl, location);
+    redirects.push({
+      from: currentUrl,
+      to: nextUrl || location,
+      statusCode: response.status
+    });
+
+    if (!nextUrl || redirects.some((redirect) => redirect.from === nextUrl)) break;
+    currentUrl = nextUrl;
+  }
+
+  if (!response || isRedirectStatus(response.status)) {
+    response = await fetch(currentUrl, {
+      cache: "no-store",
+      credentials: "omit",
+      method: "GET",
+      redirect: "follow"
+    });
+  }
+
+  return { response, redirects };
 }
 
 // Reset page-level state as soon as the top-level navigation starts.
@@ -396,10 +444,17 @@ chrome.webRequest.onBeforeRequest.addListener(
     if (details.tabId < 0) return;
 
     if (details.type === "main_frame") {
+      const existingEntry = cache[details.tabId];
+      if (existingEntry && existingEntry.mainRequestId === details.requestId) {
+        existingEntry.mainFrameUrl = details.url;
+        return;
+      }
+
       cache[details.tabId] = {
         ...defaultEntry(),
         requestStartedAt: details.timeStamp,
-        mainFrameUrl: details.url
+        mainFrameUrl: details.url,
+        mainRequestId: details.requestId
       };
       return;
     }
@@ -437,6 +492,7 @@ chrome.webRequest.onBeforeRedirect.addListener(
     if (details.tabId < 0 || details.type !== "main_frame") return;
 
     const entry = entryFor(details.tabId);
+    entry.mainRequestId = details.requestId;
     entry.redirects.push({
       from: details.url,
       to: details.redirectUrl,

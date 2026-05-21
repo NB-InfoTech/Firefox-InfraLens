@@ -43,7 +43,7 @@ Current features
 - Open current site in Sucuri SiteCheck to review malware and blocklist status
 - Dedicated Blocklist Check section in the popup with a Sucuri SiteCheck button
 - TXT reports include an External Checks section with Sucuri, SecurityHeaders, SSL Labs, and VirusTotal links
-- Popup header shows icon16.png beside the InfraLens name
+- Popup header shows InfraLens16.png beside the InfraLens name
 - Popup header shows the extension version from manifest.json
 - Settings gear opens an internal extension reference page
 - Internal settings page explains HTTPS, HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, cookie flags, mixed content, redirects, Sucuri, and VirusTotal
@@ -92,7 +92,7 @@ Paid tier recommendation
 Firefox Add-ons preparation
 1. Keep manifest.json at the ZIP root.
 2. Use Manifest V3 with Firefox background scripts.
-3. Include icon16.png, icon48.png, and icon128.png.
+3. Include InfraLens16.png, InfraLens48.png, and InfraLens128.png.
 4. Add screenshots that show the popup and report output.
 5. Publish a clear privacy policy.
 6. Explain why webRequest and all_urls are needed:
@@ -103,6 +103,8 @@ Monetization note
 Use your own licensing/payment flow if you add Pro features later.
 
 Change history
+- 2026-05-21: Released v1.4.1 with Firefox redirect-chain fixes. Main-frame redirects are no longer cleared during redirect hops, and the active popup scan now reports redirect chains even when the navigation cache is unavailable.
+- 2026-05-21: Updated extension icon references to InfraLens16.png, InfraLens48.png, and InfraLens128.png.
 - 2026-05-10: Created Firefox-compatible extension folder with Manifest V3 Firefox background scripts, Gecko metadata, and Firefox Add-ons preparation notes.
 - 2026-05-10: Added popup version display, Infrastructure section, Firefox DNS-based IP lookup, best-effort CDN detection, best-effort CMS detection, and README change history tracking.
 - 2026-05-10: Moved SecurityHeaders, SSL Labs, VirusTotal, and Sucuri SiteCheck buttons under Blocklist Check, leaving Quick Tools focused on copy, reload, and export actions.
